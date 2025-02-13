@@ -1,0 +1,167 @@
+/* Importar una fuente elegante para los títulos */
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@600&display=swap');
+
+/* Estilos básicos */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Arial', sans-serif;
+}
+
+body {
+    background-color: #f4f4f4;
+    color: #ffffff;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    overflow-x: hidden;
+    cursor: url('imagenes/JH-Photoroom\ \(1\).png'), auto;
+    padding: 2rem 0;
+}
+
+/* Estilos del encabezado */
+header {
+    width: 100%;
+    padding: 1rem;
+    background-color: #1a1a1a;
+    display: flex;
+    justify-content: center;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+header .logo {
+    display: flex;
+    align-items: center;
+}
+
+header .logo img {
+    height: 60px;
+    margin-right: 10px;
+    border-radius: 50%;
+}
+
+header .logo h1 {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 1.8rem;
+    color: #00A5B9;
+}
+
+/* Contenedor principal con cuadrícula */
+main {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 2rem;
+    width: 90%;
+    max-width: 1200px;
+    padding: 2rem;
+    margin-top: 2rem;
+}
+
+/* Sección hero */
+.hero {
+    background-color: #1a1a1a;
+    color: #ffffff;
+    text-align: center;
+    padding: 2rem;
+    border-radius: 10px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+.hero:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+}
+
+.hero h1 {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 1.8rem;
+    margin-bottom: 0.5rem;
+    color: #00A5B9;
+}
+
+.hero p {
+    font-size: 1rem;
+    color: #d1d5db;
+    margin-bottom: 1rem;
+}
+
+.hero .icon {
+    font-size: 2.5rem;
+    color: #00A5B9;
+    transition: transform 0.3s ease;
+}
+
+.hero:hover .icon {
+    transform: scale(1.1);
+}
+
+/* Sección de Preguntas Frecuentes (FAQ) */
+.faq {
+    width: 100%;
+    max-width: 1200px;
+    background-color: #ffffff;
+    color: #1a1a1a;
+    padding: 2rem;
+    border-radius: 10px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    margin-top: 2rem;
+}
+
+.section-title {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 2rem;
+    color: #00A5B9;
+    margin-bottom: 1.5rem;
+    text-align: center;
+}
+
+/* Contenedor de preguntas frecuentes */
+.faq-container {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+/* Cada ítem de FAQ */
+.faq-item {
+    background-color: #1a1a1a;
+    color: #ffffff;
+    padding: 1rem;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.faq-item:hover {
+    background-color: #00A5B9;
+    transform: translateY(-5px);
+}
+
+.faq-question {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 1.2rem;
+    font-family: 'Montserrat', sans-serif;
+}
+
+.toggle-icon {
+    transition: transform 0.3s ease;
+}
+
+.faq-item.active .toggle-icon {
+    transform: rotate(180deg);
+}
+
+.faq-answer {
+    display: none;
+    margin-top: 1rem;
+    font-size: 1rem;
+    color: #d1d5db;
+}
+
+.faq-item.active .faq-answer {
+    display: block;
+}

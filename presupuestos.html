@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Catálogo de Productos SDG</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: #f0f2f5;
+            font-size: 14px;
+        }
+
+        .sidebar {
+    background-color:rgb(163, 163, 163) ; /* Fondo oscuro moderno */
+    color: white; /* Texto blanco */
+    min-height: 100vh;
+    padding: 20px; /* Espaciado interno */
+    box-shadow: 2px 0 10px rgba(0, 0, 0, 0.2); /* Sombra para separación */
+    border-right: 2px solid rgb(141, 186, 39); /* Línea decorativa verde */
+}
+
+.sidebar h4 {
+    text-align: center;
+    margin-top: 0;
+    font-size: 18px;
+    font-weight: 600;
+    text-transform: uppercase;
+    color: white; /* Texto verde */
+    margin-bottom: 20px;
+}
+
+#categorias {
+    list-style: none; /* Elimina puntos de la lista */
+    padding: 0;
+    margin: 0;
+}
+
+#categorias button {
+    background-color: transparent;
+    color: white;
+    border: 1px solid #28a745; /* Borde verde */
+    border-radius: 25px; /* Bordes redondeados */
+    padding: 10px 15px;
+    margin-bottom: 10px;
+    text-align: left;
+    font-size: 14px;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    cursor: pointer;
+    width: 100%; /* Ocupa todo el ancho */
+}
+
+#categorias button:hover {
+    background-color: rgb(141, 186, 39); /* Fondo verde al pasar el cursor */
+    color: white; /* Texto blanco */
+    transform: translateX(5px); /* Mueve ligeramente el botón */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* Efecto de sombra */
+}
+
+#categorias button.active {
+    background-color: rgb(141, 186, 39); /* Fondo verde para categoría activa */
+    color: white;
+    font-weight: bold;
+}
+
+
+        .producto-card {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between; /* Distribuye uniformemente los elementos */
+    align-items: center;
+    height: 350px; /* Altura fija para todas las tarjetas */
+    overflow: hidden; /* Evita que el contenido se desborde */
+    padding: 10px; /* Espaciado interno */
+    box-sizing: border-box; /* Incluye padding dentro del tamaño */
+    transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+}
+
+.producto-card img {
+    width: 100%;
+    height: 150px; /* Altura fija para imágenes */
+    object-fit: contain; /* Asegura que toda la imagen se ajuste sin recortarse */
+    margin-bottom: 10px; /* Espaciado entre imagen y contenido */
+}
+
+.producto-card .card-body {
+    flex-grow: 1; /* Permite que el contenido ocupe espacio flexible */
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between; /* Distribuye espacio entre título y botón */
+    align-items: center;
+    text-align: center;
+    width: 100%;
+    overflow: hidden; /* Evita desbordamientos */
+}
+
+.producto-card .card-title {
+    font-size: 14px;
+    line-height: 1.2; /* Controla la altura del texto */
+    max-height: 2.4em; /* Limita el texto a dos líneas */
+    overflow: hidden; /* Esconde el texto que exceda el límite */
+    text-overflow: ellipsis; /* Añade "..." para texto truncado */
+    margin-bottom: 10px; /* Espaciado entre título y precio */
+}
+
+.producto-card .btn {
+    margin-top: 10px;
+    width: 100%; /* Asegura que el botón no se salga del ancho */
+    max-width: 200px;
+    align-self: center;
+}
+
+
+
+.presupuesto-sidebar {
+    background-color: #f8f9fa; /* Fondo claro y limpio */
+    border-left: 5px solid rgb(141, 186, 39); /* Línea decorativa verde */
+    box-shadow: -2px 0 10px rgba(0, 0, 0, 0.2); /* Sombra para profundidad */
+    overflow-y: auto;
+    height: 100vh; /* Ocupa todo el alto de la pantalla */
+    padding: 20px; /* Espaciado interno */
+    border-radius: 15px 0 0 15px; /* Bordes redondeados en el lado izquierdo */
+}
+
+.presupuesto-sidebar h3 {
+    color: #28a745; /* Texto verde */
+    font-size: 20px; /* Tamaño de fuente más grande */
+    font-weight: bold;
+    text-align: center;
+    text-transform: uppercase;
+    margin-bottom: 20px;
+}
+        .catalogo-scroll {
+            height: calc(100vh - 150px); /* Ajusta según la altura deseada */
+            overflow-y: auto;
+        }
+
+        .cantidad {
+            font-size: 16px; /* Tamaño de la fuente */
+            padding: 5px; /* Espaciado interno */
+            width: 40px; /* Ajusta el ancho según tu preferencia */
+            height: 40px; /* Ajusta la altura según tu preferencia */
+        }
+    </style>
+</head>
+<body>
+
+<div class="container-fluid">
+    <div class="row">
+
+        <!-- BARRA LATERAL IZQUIERDA -->
+        <div class="col-md-2 sidebar p-3">
+            <h4>Categorías</h4>
+            <div id="categorias" class="btn-group-vertical w-100"></div>
+        </div>
+
+        <!-- CONTENIDO PRINCIPAL -->
+        <div class="col-md-8 py-4">
+            <h2> Productos SGD Tiendas</h2>
+
+            <div class="row mb-4">
+                <div class="col-md-7">
+                    <input type="text" id="buscar" class="form-control" placeholder="Buscar por descripción">
+                </div>
+            </div>
+
+            <!-- Contenedor con scroll -->
+            <div class="row catalogo-scroll" id="catalogo"></div>
+        </div>
+
+        <!-- PRESUPUESTO -->
+        <div class="col-md-2 presupuesto-sidebar p-3">
+            <h3>Presupuesto</h3>
+            <table class="table" id="presupuesto">
+                <thead>
+                    <tr>
+                        <th>Producto</th>
+                        <th>Cant.</th>
+                        <th>Total</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+            <h4>Total: $<span id="total">0.00</span></h4>
+
+            <!-- Campo para correo electrónico -->
+            <div class="form-group">
+                <label for="correo">Correo Electrónico:</label>
+                <input type="email" id="correo" class="form-control" placeholder="Ingrese el correo del cliente">
+            </div>
+
+            <!-- Botón para enviar correo -->
+            <button class="btn btn-primary w-100" id="enviarCorreo">
+                <i class="fas fa-envelope"></i> Enviar por Correo
+            </button>
+
+            <!-- Botón para exportar PDF -->
+            <button class="btn btn-success w-100 mt-2" id="exportarPDF">
+                <i class="fas fa-file-pdf"></i> Exportar a PDF
+            </button>
+        </div>
+    </div>
+</div>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
+
+<script>
+
+$(document).ready(function() {
+        
+        $('#enviarCorreo').click(function () {
+    const correo = $('#correo').val(); 
+
+    if (!correo) {
+        alert('Por favor, ingrese un correo electrónico válido.');
+        return;
+    }
+
+    // Validar formato del correo
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(correo)) {
+        alert('Por favor, ingrese un correo electrónico válido.');
+        return;
+    }
+
+    // Generar el PDF
+    const { jsPDF } = window.jspdf;
+    const doc = new jsPDF();
+
+    doc.setFontSize(16);
+    doc.text('Presupuesto de Productos', 60, 20);
+
+    let y = 40;
+
+    doc.setFontSize(12);
+    doc.text('Producto', 20, y);
+    doc.text('Cantidad', 100, y);
+    doc.text('Total', 150, y);
+    y += 10;
+
+    $('#presupuesto tbody tr').each(function () {
+        const producto = $(this).find('td').eq(0).text();
+        const cantidad = $(this).find('.cantidad').val();
+        const total = $(this).find('.total').text();
+
+        doc.text(producto, 20, y);
+        doc.text(cantidad, 100, y);
+        doc.text(total, 150, y);
+
+        y += 10;
+
+        if (y > 270) {
+            doc.addPage();
+            y = 20;
+        }
+    });
+
+    y += 10;
+    doc.setFontSize(14);
+    doc.text('Total: $' + $('#total').text(), 20, y);
+
+    // Convertir el PDF a Blob
+    const pdfBlob = doc.output('blob');
+    const formData = new FormData();
+    formData.append('archivo', pdfBlob, 'presupuesto.pdf');
+    formData.append('email', correo);
+
+    // Enviar datos al backend
+    $.ajax({
+        url: 'enviarCorreo.php',
+        type: 'POST',
+        data: formData,
+        processData: false,
+        contentType: false,
+        success: function (response) {
+            alert(response);
+        },
+        error: function (xhr, status, error) {
+            console.error('Error:', error);
+            alert('Hubo un error al enviar el correo.');
+        },
+    });
+});
+    });
+
+
+
+
+
+
+    $(document).ready(function() {
+        let productosData = {};
+        let categoriaSeleccionada = "";
+
+        // Cargar productos desde PHP
+        $.ajax({
+            url: 'productos.php',
+            type: 'GET',
+            dataType: 'json',
+            success: function(data) {
+                productosData = data;
+                cargarCategorias(Object.keys(data));
+                cargarProductos(data);
+            },
+            error: function(xhr, status, error) {
+                console.error('Error al cargar productos:', error);
+            }
+        });
+
+        function cargarCategorias(categorias) {
+            $('#categorias').append(`<button class="btn btn-light active mb-2" data-categoria="">Todas</button>`);
+            categorias.forEach(function(categoria) {
+                $('#categorias').append(`<button class="btn btn-light mb-2" data-categoria="${categoria}">${categoria}</button>`);
+            });
+        }
+
+        function cargarProductos(data, filtroCategoria = "", filtroBusqueda = "") {
+            $('#catalogo').empty();
+            $.each(data, function(categoria, productos) {
+                if (filtroCategoria === "" || categoria === filtroCategoria) {
+                    productos.forEach(function(producto) {
+                        if (producto.descripcion.toLowerCase().includes(filtroBusqueda.toLowerCase())) {
+                            let card = `
+    <div class="col-lg-4 col-md-6 mb-4">
+        <div class="card producto-card">
+            <img src="${producto.imagen}" class="card-img-top" alt="${producto.descripcion}">
+            <div class="card-body text-center">
+                <h5 class="card-title">${producto.descripcion}</h5>
+                <p class="card-text"><strong>Precio:</strong> $${producto.precio.toFixed(2)}</p>
+                <button class="btn btn-success agregar" data-desc="${producto.descripcion}" data-precio="${producto.precio}">
+                    <i class="fas fa-cart-plus"></i> Agregar
+                </button>
+            </div>
+        </div>
+    </div>`;
+$('#catalogo').append(card);
+
+                        }
+                    });
+                }
+            });
+        }
+
+        $('#buscar').on('input', function() {
+            let filtroBusqueda = $(this).val();
+            cargarProductos(productosData, categoriaSeleccionada, filtroBusqueda);
+        });
+
+        $(document).on('click', '.btn-light', function() {
+            $('.btn-light').removeClass('active');
+            $(this).addClass('active');
+            categoriaSeleccionada = $(this).data('categoria');
+            cargarProductos(productosData, categoriaSeleccionada, $('#buscar').val());
+        });
+
+        $(document).on('click', '.agregar', function() {
+            let descripcion = $(this).data('desc');
+            let precio = parseFloat($(this).data('precio'));
+            $('#presupuesto tbody').append(`
+                <tr>
+                    <td>${descripcion}</td>
+                    <td><input type="number" class="form-control cantidad" value="1" min="1" data-precio="${precio}"></td>
+                    <td class="total">$${precio.toFixed(2)}</td>
+                    <td><button class="btn btn-danger btn-sm eliminar"><i class="fas fa-trash"></i></button></td>
+                </tr>`);
+            actualizarTotal();
+        });
+
+        $(document).on('click', '.eliminar', function() {
+            $(this).closest('tr').remove();
+            actualizarTotal();
+        });
+
+        $(document).on('input', '.cantidad', function() {
+            let cantidad = $(this).val();
+            let precio = $(this).data('precio');
+            let total = cantidad * precio;
+            $(this).closest('tr').find('.total').text('$' + total.toFixed(2));
+            actualizarTotal();
+        });
+
+        function actualizarTotal() {
+            let total = 0;
+            $('#presupuesto tbody tr').each(function() {
+                total += parseFloat($(this).find('.total').text().replace('$', ''));
+            });
+            $('#total').text(total.toFixed(2));
+        }
+
+        $('#exportarPDF').click(function() {
+    const { jsPDF } = window.jspdf; // Asegúrate de que jsPDF esté cargado
+    const doc = new jsPDF();
+
+    // Título del PDF
+    doc.setFontSize(16);
+    doc.text('Presupuesto de Productos', 60, 20);
+
+    // Posición inicial para el contenido
+    let y = 40;
+
+    // Encabezado de la tabla
+    doc.setFontSize(12);
+    doc.text('Producto', 20, y);
+    doc.text('Cantidad', 100, y);
+    doc.text('Total', 150, y);
+    y += 10; // Espacio entre filas
+
+    // Recorrer cada fila de la tabla en el DOM
+    $('#presupuesto tbody tr').each(function() {
+        const producto = $(this).find('td').eq(0).text(); // Descripción del producto
+        const cantidad = $(this).find('.cantidad').val(); // Cantidad del producto
+        const total = $(this).find('.total').text(); // Total del producto
+
+        doc.text(producto, 20, y); // Columna de producto
+        doc.text(cantidad, 100, y); // Columna de cantidad
+        doc.text(total, 150, y); // Columna de total
+
+        y += 10; // Incrementar la posición vertical
+
+        // Añadir nueva página si el contenido sobrepasa la altura del documento
+        if (y > 270) {
+            doc.addPage();
+            y = 20; // Reiniciar la posición vertical en la nueva página
+        }
+    });
+
+    // Total general
+    y += 10;
+    doc.setFontSize(14);
+    doc.text('Total: $' + $('#total').text(), 20, y);
+
+    // Descargar el archivo PDF
+    doc.save('presupuesto.pdf');
+});
+
+    });
+</script>
+
+</body>
+</html>
