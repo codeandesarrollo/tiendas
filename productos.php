@@ -5,6 +5,7 @@ error_reporting(0);
 
 // Encabezado JSON
 header("Content-Type: application/json; charset=utf-8");
+echo json_encode($data);
 
 // Limpieza del búfer de salida
 if (ob_get_length()) {
